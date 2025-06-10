@@ -1,0 +1,41 @@
+
+<h2>{{titulo}}</h2>
+
+<dx-tab-panel
+  tabsPosition="top"
+  stylingMode="secondary"
+  iconPosition="top"
+  [height]="418"
+  [animationEnabled]="true"
+  [swipeEnabled]="true">
+
+  <dxi-item title="Listar" icon="bulletlist" template="listarTemplate"></dxi-item>
+
+  <dxi-item title="Criar" icon="add" template="addTemplate"></dxi-item>
+
+  <dxi-item title="Atualizar" icon="edit" template="editTemplate"></dxi-item>
+
+  <dxi-item title="Deletar" icon="clearformat" template="deletarTemplate"></dxi-item>
+
+  <div *dxTemplate="let data of 'listarTemplate'">
+    <ng-content select="[listagem]"></ng-content>
+
+  </div>
+
+  <div *dxTemplate="let data of 'addTemplate'">
+    <ng-content select="[add]"></ng-content>
+
+  </div>
+
+  <div *dxTemplate="let data of 'editTemplate'">
+    <ng-content select="[edit]"></ng-content>
+
+  </div>
+
+  <div *dxTemplate="let data of 'deletarTemplate'">
+    <ng-content select="[deletar]"></ng-content>
+
+  </div>
+
+</dx-tab-panel>
+

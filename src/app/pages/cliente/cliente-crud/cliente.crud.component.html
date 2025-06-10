@@ -1,0 +1,33 @@
+<base-crud [titulo]="'Clientes'">
+
+  <div listagem>
+    <dx-data-grid
+      [dataSource]="dataSource"
+      [cacheEnabled]="false">
+
+      <dxi-column
+        dataField="codCliente"
+        caption="Código"
+        alignment="center"
+        width="100"
+        cellTemplate="codigoTemplate">
+      </dxi-column>
+
+      <dxi-column
+        dataField="nomeCliente"
+        caption="Nome"
+        alignment="center"
+        cellTemplate="nomeTemplate">
+      </dxi-column>
+
+      <div *dxTemplate="let data of 'codigoTemplate'">
+        {{ data.value}}
+      </div>
+
+      <div *dxTemplate="let data of 'nomeTemplate'">
+        {{ data.value}}
+      </div>
+
+    </dx-data-grid>
+  </div>
+</base-crud>
