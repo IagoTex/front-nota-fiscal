@@ -14,7 +14,7 @@ export class ClienteService extends AbstractService<Cliente>{
     super(http, 'cliente');
   }
 
-  findByNome(nome:string): Observable<Cliente>{
-    return this.http.get<Cliente>(`${URL_API}/cliente/nome/${nome}`);
+  findByNome(nome:string): Observable<Cliente[]>{
+    return this.http.get<Cliente[]>(`${URL_API}/cliente/nome/${nome}`);
   }
 }

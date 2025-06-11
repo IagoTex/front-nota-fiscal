@@ -34,4 +34,12 @@
   <div add>
     <cliente-form [cliente]="model"  tipoFormulario="create" titulo="Cadastro de Clientes" textoBotao="Cadastrar"></cliente-form>
   </div>
+
+  <div edit>
+    <cliente-form [cliente]="model"  tipoFormulario="update" titulo="Atualização de Clientes" textoBotao="Atualizar"></cliente-form>
+  </div>
+
+  <div deletar>
+    <cliente-form [cliente]="model"  tipoFormulario="delete" titulo="Deletar Cliente" textoBotao="Deletar"></cliente-form>
+  </div>
 </base-crud>

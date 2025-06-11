@@ -18,12 +18,15 @@ export class ClienteFormComponent implements OnInit{
   @Input() textoBotao:string;
   @Input() tipoFormulario: TipoFormulario = 'create';
 
+  mostrarPesquisa: boolean = false;
+
   @Output() submit = new EventEmitter<any>();
 
   constructor(private clienteService:ClienteService) { }
 
   ngOnInit() {
     this.cliente = new Cliente();
+    this.mostrarPesquisa = this.tipoFormulario != "create" ? true: false;
   }
 
   onSubmit(){

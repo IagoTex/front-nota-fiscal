@@ -1,11 +1,19 @@
-<dx-select-box
-  #selectBox
+<dx-text-box
   width="500"
-  [dataSource]="dataSource"
-  [showClearButton]="true"
-  [selectedItem]="clienteSelecionado"
+  [showClearButton]
   [placeholder]="'Pesquise aqui...'"
-  (onKeyUp)="onValueChange()"
-  [searchEnabled]="true">
+  [value]="clientePesquisado"
+  (valueChange)="onValueChange($event)">
+</dx-text-box>
+
+<dx-select-box
+  #resultados
+  width="500"
+  [visible]="pesquisando"
+  [dataSource]="dataSource"
+  [opened]="true"
+  [(selectedItem)]="clienteSelecionado">
 
 </dx-select-box>
+
+<input [ngModel]="clientePesquisado" (ngModelChange)="onValueChange($event)">

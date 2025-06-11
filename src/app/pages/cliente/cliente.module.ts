@@ -12,11 +12,12 @@ import {
 } from "devextreme-angular";
 import {ClienteFormComponent} from "./cliente-form/cliente.form.component";
 import {ClienteSelectorComponent} from "./cliente-selector/cliente.selector.component";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   imports:
     [CommonModule,
-      BaseCrudModule, DxDataGridModule, DxFormModule, DxTextBoxModule, DxButtonModule, DxValidatorModule, DxSelectBoxModule
+      BaseCrudModule, DxDataGridModule, DxFormModule, DxTextBoxModule, DxButtonModule, DxValidatorModule, DxSelectBoxModule, FormsModule
 
     ],
   declarations: [ClienteCrudComponent, ClienteFormComponent, ClienteSelectorComponent],

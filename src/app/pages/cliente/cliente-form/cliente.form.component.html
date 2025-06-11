@@ -10,7 +10,7 @@
     [validationGroup]="'clienteFormGroup'"
     [(formData)]="cliente">
 
-    <dxi-item [label]="{text: 'Selecione o Cliente'}" [template]="'selectorTemplate'"></dxi-item>
+    <dxi-item [visible]="mostrarPesquisa" [label]="{text: 'Selecione o Cliente'}" [template]="'selectorTemplate'"></dxi-item>
 
     <dxi-item  [label]="{text: 'Nome'}" dataField="nomeCliente" [template]="'nomeTemplate'"></dxi-item>
 
