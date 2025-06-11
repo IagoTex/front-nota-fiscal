@@ -9,6 +9,7 @@ import { AuthService, ScreenService, AppInfoService } from './shared/services';
 import { UnauthenticatedContentModule } from './unauthenticated-content';
 import { AppRoutingModule } from './app-routing.module';
 import {ClienteModule} from "./pages/cliente/cliente.module";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {ClienteModule} from "./pages/cliente/cliente.module";
     LoginFormModule,
     UnauthenticatedContentModule,
     AppRoutingModule,
-    ClienteModule
+    ClienteModule,
+    HttpClientModule
   ],
   providers: [
     AuthService,

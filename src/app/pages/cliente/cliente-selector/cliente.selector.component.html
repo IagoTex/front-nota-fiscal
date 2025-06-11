@@ -1,0 +1,11 @@
+<dx-select-box
+  #selectBox
+  width="500"
+  [dataSource]="dataSource"
+  [showClearButton]="true"
+  [selectedItem]="clienteSelecionado"
+  [placeholder]="'Pesquise aqui...'"
+  (onKeyUp)="onValueChange()"
+  [searchEnabled]="true">
+
+</dx-select-box>

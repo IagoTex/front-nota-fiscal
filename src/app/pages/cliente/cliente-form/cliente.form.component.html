@@ -1,0 +1,63 @@
+<h2>{{titulo}}</h2>
+<br>
+<br>
+<div>
+  <dx-form
+    #formulario
+    align="right"
+    labelLocation="left"
+    [alignItemLabels]="true"
+    [validationGroup]="'clienteFormGroup'"
+    [(formData)]="cliente">
+
+    <dxi-item [label]="{text: 'Selecione o Cliente'}" [template]="'selectorTemplate'"></dxi-item>
+
+    <dxi-item  [label]="{text: 'Nome'}" dataField="nomeCliente" [template]="'nomeTemplate'"></dxi-item>
+
+    <dxi-item  [label]="{text: 'Código'}" dataField="codCliente" [template]="'codTemplate'"></dxi-item>
+
+
+    <div *dxTemplate="let data of 'selectorTemplate'">
+      <cliente-selector></cliente-selector>
+    </div>
+
+
+    <div *dxTemplate="let data of 'nomeTemplate'">
+      <dx-text-box
+        width="500"
+        maxLength="50"
+        [(value)]="cliente.nomeCliente"
+        [showClearButton]="true">
+        <dx-validator validationGroup="clienteFormGroup">
+          <dxi-validation-rule type="required" message="O nome do cliente é obrigatório!"></dxi-validation-rule>
+        </dx-validator>
+
+      </dx-text-box>
+
+    </div>
+
+
+    <div *dxTemplate="let data of 'codTemplate'">
+      <dx-text-box
+        width="500"
+        maxLength="50"
+        [(value)]="cliente.codCLiente"
+        [showClearButton]="true">
+        <dx-validator validationGroup="clienteFormGroup">
+          <dxi-validation-rule type="required" message="O código do cliente é obrigatório!"></dxi-validation-rule>
+        </dx-validator>
+
+      </dx-text-box>
+
+    </div>
+
+
+  </dx-form>
+<div [ngStyle]="{'margin-top': '20px', 'margin-left': '139px'}">
+  <dx-button
+    [text]="textoBotao"
+    (onClick)="onSubmit()">
+
+  </dx-button>
+</div>
+</div>

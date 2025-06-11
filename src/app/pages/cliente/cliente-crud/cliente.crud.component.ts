@@ -10,6 +10,8 @@ export class ClienteCrudComponent{
 
   dataSource:Cliente[];
 
+  model: Cliente;
+
 
 
 }
