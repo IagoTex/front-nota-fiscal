@@ -41,7 +41,7 @@
       <dx-text-box
         width="500"
         maxLength="50"
-        [(value)]="cliente.codCLiente"
+        [(value)]="cliente.codCliente"
         [showClearButton]="true">
         <dx-validator validationGroup="clienteFormGroup">
           <dxi-validation-rule type="required" message="O código do cliente é obrigatório!"></dxi-validation-rule>
@@ -55,6 +55,7 @@
   </dx-form>
 <div [ngStyle]="{'margin-top': '20px', 'margin-left': '139px'}">
   <dx-button
+    validationGroup="formulario"
     [text]="textoBotao"
     (onClick)="onSubmit()">
 

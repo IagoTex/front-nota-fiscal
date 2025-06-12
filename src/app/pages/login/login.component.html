@@ -1,0 +1,60 @@
+
+<div *ngIf="possuiLogin == true" class="titleContainer"><h1>Login</h1></div>
+<div *ngIf="possuiLogin == false" class="titleContainer"><h1>Cadastrar</h1></div>
+<dx-form class="form-wrapper"
+  #form
+  align="center"
+  labelLocation="top"
+  validationGroup="loginValidationGroup"
+  [colCount]="1"
+  [(formData)]="user"
+  [alignItemLabels]="true">
+
+  <dxi-item dataField="username" [label]="{text: 'Usuário'}" [template]="'usernameTemplate'"></dxi-item>
+
+  <dxi-item dataField="password" [label]="{text: 'Senha'}" [template]="'passwordTemplate'"></dxi-item>
+
+  <dxi-item [label]="{visible: false}" [template]="'btnTemplate'"></dxi-item>
+
+  <dxi-item [label]="{visible: false}" [template]="'cadastroTemplate'"></dxi-item>
+
+  <div *dxTemplate="let data of 'usernameTemplate'">
+    <dx-text-box
+      [(value)]="user.username"
+      [showClearButton]="true"
+      maxLength="50"
+      width="500">
+      <dx-validator validationGroup="loginValidationGroup">
+        <dxi-validation-rule type="required" message="O usuário é um campo obrigatório!"></dxi-validation-rule>
+      </dx-validator>
+
+    </dx-text-box>
+  </div>
+
+  <div *dxTemplate="let data of 'passwordTemplate'">
+    <dx-text-box
+      [(value)]="user.password"
+      [mode]="'password'"
+      [showClearButton]="true"
+      maxLength="50"
+      width="500">
+      <dx-validator validationGroup="loginValidationGroup">
+        <dxi-validation-rule type="required" message="Senha é um campo obrigatório!"></dxi-validation-rule>
+      </dx-validator>
+    </dx-text-box>
+  </div>
+
+  <div *dxTemplate="let data of 'btnTemplate'">
+    <dx-button
+      (onClick)="onSubmit()"
+      [text]="textoBtn">
+
+    </dx-button>
+  </div>
+
+  <div *dxTemplate="let data of 'cadastroTemplate'">
+    <p class="link" (click)="trocaLoginCadastro()" >{{textoTroca}}</p>
+  </div>
+
+</dx-form>
+

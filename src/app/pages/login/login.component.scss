@@ -1,0 +1,22 @@
+.form-wrapper {
+  display: flex;
+  justify-content: center; /* centraliza horizontalmente */
+  align-items: center;     /* opcional: centraliza verticalmente */
+  height: 50vh;
+}
+
+.titleContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link{
+  color: #5a9ada;
+}
+
+.link:hover{
+  cursor: pointer;
+  color: #0c78e3;
+}
+

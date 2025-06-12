@@ -4,12 +4,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { DxHttpModule } from 'devextreme-angular/http';
 import { SideNavOuterToolbarModule, SideNavInnerToolbarModule, SingleCardModule } from './layouts';
-import { FooterModule, ResetPasswordFormModule, CreateAccountFormModule, ChangePasswordFormModule, LoginFormModule } from './shared/components';
-import { AuthService, ScreenService, AppInfoService } from './shared/services';
+import { FooterModule} from './shared/components';
+import {ScreenService, AppInfoService } from './shared/services';
 import { UnauthenticatedContentModule } from './unauthenticated-content';
 import { AppRoutingModule } from './app-routing.module';
 import {ClienteModule} from "./pages/cliente/cliente.module";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {LoginComponentModule} from "./pages/login/login.component";
+import {AuthService} from "./shared/services/security/auth.service";
+import {JwtInterceptorService} from "./shared/services/security/jwt.interceptor.service";
 
 @NgModule({
   declarations: [
@@ -22,19 +25,18 @@ import {HttpClientModule} from "@angular/common/http";
     SideNavInnerToolbarModule,
     SingleCardModule,
     FooterModule,
-    ResetPasswordFormModule,
-    CreateAccountFormModule,
-    ChangePasswordFormModule,
-    LoginFormModule,
     UnauthenticatedContentModule,
     AppRoutingModule,
     ClienteModule,
-    HttpClientModule
+    HttpClientModule,
+    LoginComponentModule
   ],
   providers: [
-    AuthService,
     ScreenService,
-    AppInfoService
+    AppInfoService,
+    AuthService,{ provide: HTTP_INTERCEPTORS,
+                  useClass: JwtInterceptorService,
+                  multi: true}
   ],
   bootstrap: [AppComponent]
 })

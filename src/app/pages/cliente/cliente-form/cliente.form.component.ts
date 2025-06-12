@@ -31,9 +31,7 @@ export class ClienteFormComponent implements OnInit{
 
   onSubmit(){
 
-    const result = this.formCliente.instance.validate();
-
-    if(result.isValid){
+    if(this.cliente.nomeCliente!= null && this.cliente.codCliente !=null){
       switch (this.tipoFormulario){
 
         case "create":
