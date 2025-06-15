@@ -1,0 +1,145 @@
+<base-crud
+  [titulo]="'Notas Fiscais'">
+
+  <div listagem>
+    <dx-data-grid
+      [dataSource]="dataSource"
+      [cacheEnabled]="false">
+
+      <dxi-column
+        dataField="data"
+        caption="Data"
+        alignment="center"
+        width="100"
+        cellTemplate="dataTemplate"
+      >
+      </dxi-column>
+
+      <dxi-column
+        dataField="cliente"
+        caption="Cliente"
+        alignment="center"
+        cellTemplate="clienteTemplate"
+      >
+      </dxi-column>
+      <dxi-column
+        dataField="valorTotal"
+        caption="Valor Total"
+        alignment="center"
+        width="200"
+        cellTemplate="valorTemplate"
+      >
+      </dxi-column>
+
+      <dxi-column
+        caption="Itens"
+        alignment="center"
+        width="100"
+        cellTemplate="itensTemplate"
+      >
+      </dxi-column>
+
+      <div *dxTemplate="let data of 'dataTemplate'">
+        {{ data.value |  date: 'BRL'}}
+      </div>
+
+      <div *dxTemplate="let data of 'clienteTemplate'">
+        {{ data.value.nomeCliente}}
+      </div>
+
+      <div *dxTemplate="let data of 'valorTemplate'">
+        {{data.value | currency: 'BRL'}}
+
+      </div>
+
+      <div *dxTemplate="let data of 'itensTemplate'">
+        <dx-button [icon]="'eyeopen'" (onClick)="abrirPopUp()"></dx-button>
+
+      </div>
+
+    </dx-data-grid>
+
+    <dx-popup
+      [visible]="mostrarPopUp"
+      [showCloseButton]="true"
+      [showTitle]="true"
+      [title]="'Itens'"
+      (closeOnOutsideClickChange)="true">
+      <dx-data-grid
+        [dataSource]="itens"
+        [cacheEnabled]="true">
+
+        <dxi-column
+          dataField="produto"
+          caption="Produto"
+          alignment="center"
+          cellTemplate="produtoTemplate"
+        >
+        </dxi-column>
+
+        <dxi-column
+          dataField="quantidade"
+          caption="Quantidade"
+          alignment="center"
+          width="100"
+          cellTemplate="quantidadeTemplate"
+        >
+        </dxi-column>
+
+        <dxi-column
+          dataField="ordem"
+          caption="Ordem"
+          alignment="center"
+          width="100"
+          cellTemplate="ordemTemplate"
+        >
+        </dxi-column>
+
+        <dxi-column
+          dataField="valorTotal"
+          caption="Valor Total"
+          alignment="center"
+          width="100"
+          cellTemplate="valorTemplate"
+        >
+        </dxi-column>
+
+        <div *dxTemplate="let data of 'produtoTemplate'">
+          {{data.value.descricao}}
+
+        </div>
+
+        <div *dxTemplate="let data of 'quantidadeTemplate'">
+          {{data.value}}
+
+        </div>
+
+        <div *dxTemplate="let data of 'ordemTemplate'">
+          {{data.value}}
+
+        </div>
+
+        <div *dxTemplate="let data of 'valorTemplate'">
+          {{data.value | currency: 'BRL'}}
+
+        </div>
+
+      </dx-data-grid>
+
+    </dx-popup>
+
+  </div>
+
+  <div add>
+
+  </div>
+
+  <div edit>
+
+  </div>
+
+  <div deletar>
+
+  </div>
+
+</base-crud>

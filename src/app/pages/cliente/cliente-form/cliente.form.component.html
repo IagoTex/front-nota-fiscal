@@ -18,15 +18,17 @@
 
 
     <div *dxTemplate="let data of 'selectorTemplate'">
-      <cliente-selector></cliente-selector>
+      <cliente-selector (valueChange)="selecionaCliente($event)"></cliente-selector>
     </div>
 
 
     <div *dxTemplate="let data of 'nomeTemplate'">
       <dx-text-box
+        #nomeTbx
         width="500"
         maxLength="50"
         [(value)]="cliente.nomeCliente"
+        [disabled]="this.tipoFormulario == 'delete'"
         [showClearButton]="true">
         <dx-validator validationGroup="clienteFormGroup">
           <dxi-validation-rule type="required" message="O nome do cliente é obrigatório!"></dxi-validation-rule>
@@ -39,9 +41,11 @@
 
     <div *dxTemplate="let data of 'codTemplate'">
       <dx-text-box
+        #codTbx
         width="500"
         maxLength="50"
         [(value)]="cliente.codCliente"
+        [disabled]="this.tipoFormulario == 'delete'"
         [showClearButton]="true">
         <dx-validator validationGroup="clienteFormGroup">
           <dxi-validation-rule type="required" message="O código do cliente é obrigatório!"></dxi-validation-rule>
@@ -53,12 +57,25 @@
 
 
   </dx-form>
-<div [ngStyle]="{'margin-top': '20px', 'margin-left': '139px'}">
-  <dx-button
-    validationGroup="formulario"
-    [text]="textoBotao"
-    (onClick)="onSubmit()">
 
-  </dx-button>
+<div class="container-btns">
+  <div [ngStyle]="{'margin-top': '20px', 'margin-left': '139px'}">
+    <dx-button
+      validationGroup="formulario"
+      [text]="textoBotao"
+      (onClick)="onSubmit()">
+
+    </dx-button>
+  </div>
+
+  <div *ngIf="tipoFormulario == 'delete'"
+       [ngStyle]="{'margin-top': '20px'}">
+    <dx-button
+      [text]="'Cancelar'"
+      (onClick)="apagaCliente()">
+
+    </dx-button>
+  </div>
+
 </div>
 </div>

@@ -9,10 +9,12 @@
 <dx-select-box
   #resultados
   width="500"
+  displayExpr="nomeCliente"
   [visible]="pesquisando"
   [dataSource]="dataSource"
   [opened]="true"
-  [(selectedItem)]="clienteSelecionado">
+  [selectedItem]="clienteSelecionado"
+  (valueChange)="nomeVlaueChange($event)">
 
 </dx-select-box>
 

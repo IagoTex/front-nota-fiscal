@@ -1,24 +1,19 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
-import {Cliente} from "../../../entitys/cliente";
-import {ClienteService} from "../../../shared/services/cliente.service";
-import {DxFormComponent, DxTextBoxComponent} from "devextreme-angular";
+import {Produto} from "../../../entitys/produto";
+import {DxFormComponent} from "devextreme-angular";
+import {ProdutoService} from "../../../shared/services/produto.service";
 
 type TipoFormulario = 'create' | 'update' | 'delete';
 
 @Component({
-  selector: "cliente-form",
-  templateUrl: "./cliente.form.component.html",
-  styleUrls: ['./cliente.form.component.scss']
+  selector: 'produto-form',
+  templateUrl: './produto.form.component.html'
 })
-export class ClienteFormComponent implements OnInit{
+export class ProdutoFormComponent implements OnInit{
 
   @ViewChild('formulario') formCliente: DxFormComponent;
 
-  @ViewChild('codTbx') codTbx: DxTextBoxComponent;
-
-  @ViewChild('nomeTbx') nomeTbx: DxTextBoxComponent;
-
-  @Input() cliente: Cliente;
+  @Input() produto: Produto;
   @Input() titulo: string;
   @Input() textoBotao:string;
   @Input() tipoFormulario: TipoFormulario = 'create';
@@ -27,16 +22,16 @@ export class ClienteFormComponent implements OnInit{
 
   @Output() submit = new EventEmitter<any>();
 
-  constructor(private clienteService:ClienteService) { }
+  constructor(private service:ProdutoService) { }
 
   ngOnInit() {
-    this.cliente = new Cliente();
+    this.produto = new Produto();
     this.mostrarPesquisa = this.tipoFormulario != "create" ? true: false;
   }
 
   onSubmit(){
 
-    if(this.cliente.nomeCliente!= null && this.cliente.codCliente !=null){
+    if(this.produto.codProduto!= null && this.produto.descricao !=null && this.produto.preco !=null){
       switch (this.tipoFormulario){
 
         case "create":
@@ -52,8 +47,6 @@ export class ClienteFormComponent implements OnInit{
           break
 
       }
-      this.apagaCliente()
-
     } else {
       alert('Por favor, preencha todos os campos obrigatórios.')
     }
@@ -61,7 +54,7 @@ export class ClienteFormComponent implements OnInit{
   }
 
   save(){
-    this.clienteService.save(this.cliente).subscribe(
+    this.service.save(this.produto).subscribe(
       response => {
         this.submit.emit(response);
       }, error => {
@@ -71,8 +64,8 @@ export class ClienteFormComponent implements OnInit{
   }
 
   delete(){
-    if(this.cliente.id != null){
-      this.clienteService.save(this.cliente).subscribe(
+    if(this.produto.id != null){
+      this.service.save(this.produto).subscribe(
         response => {
           this.submit.emit(response);
         }, error => {
@@ -82,16 +75,4 @@ export class ClienteFormComponent implements OnInit{
     }
   }
 
-  selecionaCliente(cliente:Cliente){
-
-    this.cliente = cliente;
-  }
-
-  apagaCliente(){
-    this.cliente.codCliente = null;
-    this.cliente.nomeCliente = null;
-    this.cliente.id = null;
-  }
-
-  protected readonly Cliente = Cliente;
 }

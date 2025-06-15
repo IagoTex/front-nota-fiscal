@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
 import {Cliente} from "../../../entitys/cliente";
 import {ClienteService} from "../../../shared/services/cliente.service";
 
@@ -6,21 +6,24 @@ import {ClienteService} from "../../../shared/services/cliente.service";
   selector: "cliente-selector",
   templateUrl: "./cliente.selector.component.html"
 })
-export class ClienteSelectorComponent{
+export class ClienteSelectorComponent implements OnInit{
 
   dataSource: Cliente[];
   clientePesquisado: string;
   pesquisando: boolean = false;
 
   @Input() clienteSelecionado: Cliente;
-  @Output() valueChange = new EventEmitter<string>();
+  @Output() valueChange = new EventEmitter<Cliente>();
 
   constructor(private service:ClienteService) { }
+
+  ngOnInit() {
+    this.clienteSelecionado = new Cliente();
+  }
 
   onValueChange(event: string){
     this.clientePesquisado = event;
     console.log(this.clientePesquisado)
-    this.valueChange.emit(event);
     this.searchValidation();
     if(this.clientePesquisado.length % 2 == 0){
       this.service.findByNome(this.clientePesquisado).subscribe(clientes => {
@@ -40,6 +43,12 @@ export class ClienteSelectorComponent{
   }
 
 
+  nomeVlaueChange(cliente: Cliente) {
+    this.clienteSelecionado = cliente;
+    console.log(cliente);
+    this.clientePesquisado = '';
+    this.valueChange.emit(this.clienteSelecionado);
 
+  }
 }
 

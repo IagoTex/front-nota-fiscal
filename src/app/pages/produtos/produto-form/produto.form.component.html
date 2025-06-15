@@ -1,0 +1,79 @@
+<h2>{{titulo}}</h2>
+<br>
+<br>
+  <dx-form
+    #formulario
+    align="right"
+    labelLocation="left"
+    [alignItemLabels]="true"
+    [validationGroup]="'clienteFormGroup'"
+    [(formData)]="produto">
+
+    <dxi-item [visible]="mostrarPesquisa" [label]="{text: 'Selecione o Cliente'}" [template]="'selectorTemplate'"></dxi-item>
+
+    <dxi-item  [label]="{text: 'Descrição'}" dataField="descricao" [template]="'nomeTemplate'"></dxi-item>
+
+    <dxi-item  [label]="{text: 'Código'}" dataField="codProduto" [template]="'codTemplate'"></dxi-item>
+
+    <dxi-item  [label]="{text: 'Preço'}" dataField="preco" [template]="'precoTemplate'"></dxi-item>
+
+
+    <div *dxTemplate="let data of 'selectorTemplate'">
+      <cliente-selector></cliente-selector>
+    </div>
+
+
+    <div *dxTemplate="let data of 'nomeTemplate'">
+      <dx-text-box
+        width="500"
+        maxLength="50"
+        [(value)]="produto.descricao"
+        [showClearButton]="true">
+        <dx-validator validationGroup="clienteFormGroup">
+          <dxi-validation-rule type="required" message="A descrição do produto é obrigatória!"></dxi-validation-rule>
+        </dx-validator>
+
+      </dx-text-box>
+
+    </div>
+
+
+    <div *dxTemplate="let data of 'codTemplate'">
+      <dx-text-box
+        width="500"
+        maxLength="50"
+        [(value)]="produto.codProduto"
+        [showClearButton]="true">
+        <dx-validator validationGroup="clienteFormGroup">
+          <dxi-validation-rule type="required" message="O código do produto é obrigatório!"></dxi-validation-rule>
+        </dx-validator>
+
+      </dx-text-box>
+
+    </div>
+
+
+    <div *dxTemplate="let data of 'precoTemplate'">
+      <dx-number-box
+        width="500"
+        [(value)]="produto.preco"
+        [showClearButton]="true">
+        <dx-validator validationGroup="clienteFormGroup">
+          <dxi-validation-rule type="required" message="O preço do produto é obrigatório!"></dxi-validation-rule>
+        </dx-validator>
+
+      </dx-number-box>
+
+    </div>
+
+
+  </dx-form>
+  <div [ngStyle]="{'margin-top': '20px', 'margin-left': '139px'}">
+    <dx-button
+      validationGroup="formulario"
+      [text]="textoBotao"
+      (onClick)="onSubmit()">
+
+    </dx-button>
+  </div>
+

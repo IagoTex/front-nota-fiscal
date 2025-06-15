@@ -1,0 +1,57 @@
+<base-crud [titulo]="'Produtos'">
+
+  <div listagem>
+    <dx-data-grid
+      [dataSource]="dataSource"
+      [cacheEnabled]="false">
+
+      <dxi-column
+        dataField="codProduto"
+        caption="Código"
+        alignment="center"
+        width="100"
+        cellTemplate="codigoTemplate">
+      </dxi-column>
+
+      <dxi-column
+        dataField="descricao"
+        caption="Descrição"
+        alignment="center"
+        cellTemplate="nomeTemplate">
+      </dxi-column>
+
+      <dxi-column
+        dataField="preco"
+        caption="Preço"
+        width="100"
+        alignment="center"
+        cellTemplate="precoTemplate">
+      </dxi-column>
+
+      <div *dxTemplate="let data of 'codigoTemplate'">
+        {{ data.value}}
+      </div>
+
+      <div *dxTemplate="let data of 'nomeTemplate'">
+        {{ data.value}}
+      </div>
+
+      <div *dxTemplate="let data of 'precoTemplate'">
+        {{ data.value | currency: 'BRL' }}
+      </div>
+
+    </dx-data-grid>
+  </div>
+
+  <div add>
+    <produto-form [produto]="model" (submit)="mostrarLog($event)" tipoFormulario="create" titulo="Cadastro de Produtos" textoBotao="Cadastrar"></produto-form>
+  </div>
+
+  <div edit>
+    <produto-form [produto]="model" (submit)="mostrarLog($event)" tipoFormulario="update" titulo="Atualização de Produtos" textoBotao="Atualizar"></produto-form>
+  </div>
+
+  <div deletar>
+    <produto-form [produto]="model"  (submit)="mostrarLog($event)" tipoFormulario="delete" titulo="Deletar Produto" textoBotao="Deletar"></produto-form>
+  </div>
+</base-crud>

@@ -5,7 +5,7 @@ export class AppInfoService {
   constructor() {}
 
   public get title() {
-    return 'App Name';
+    return 'Sonner Notas Fiscais';
   }
 
   public get currentYear() {

@@ -5,20 +5,20 @@ export const navigation = [
     icon: 'home'
   },
   {
-    text: 'Examples',
+    text: 'CRUDS',
     icon: 'folder',
     items: [
-      {
-        text: 'Profile',
-        path: '/profile'
-      },
       {
         text: 'Clientes',
         path: '/cliente'
       },
       {
-        text: 'Tasks',
-        path: '/tasks'
+        text: 'Produtos',
+        path: '/produto'
+      },
+      {
+        text: 'Notas Fiscais',
+        path: '/nota'
       }
     ]
   }

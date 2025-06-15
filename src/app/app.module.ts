@@ -13,6 +13,8 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {LoginComponentModule} from "./pages/login/login.component";
 import {AuthService} from "./shared/services/security/auth.service";
 import {JwtInterceptorService} from "./shared/services/security/jwt.interceptor.service";
+import {ProdutoModule} from "./pages/produtos/produto.module";
+import {NotasFiscaisModule} from "./pages/notas-fiscais/notas.fiscais.module";
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import {JwtInterceptorService} from "./shared/services/security/jwt.interceptor.
     AppRoutingModule,
     ClienteModule,
     HttpClientModule,
-    LoginComponentModule
+    LoginComponentModule,
+    ProdutoModule,
+    NotasFiscaisModule
   ],
   providers: [
     ScreenService,
