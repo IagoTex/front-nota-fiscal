@@ -27,6 +27,4 @@ export class ClienteCrudComponent implements OnInit{
   mostrarLog(log: any){
     console.log(log)
   }
-
-
 }

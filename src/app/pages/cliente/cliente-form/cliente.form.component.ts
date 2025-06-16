@@ -83,15 +83,12 @@ export class ClienteFormComponent implements OnInit{
   }
 
   selecionaCliente(cliente:Cliente){
-
     this.cliente = cliente;
   }
 
   apagaCliente(){
-    this.cliente.codCliente = null;
-    this.cliente.nomeCliente = null;
     this.cliente.id = null;
+    this.formCliente.instance.resetValues();
+    this.formCliente.instance.reset();
   }
-
-  protected readonly Cliente = Cliente;
 }

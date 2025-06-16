@@ -68,6 +68,7 @@
 
 
   </dx-form>
+<div class="container-btns">
   <div [ngStyle]="{'margin-top': '20px', 'margin-left': '139px'}">
     <dx-button
       validationGroup="formulario"
@@ -76,4 +77,16 @@
 
     </dx-button>
   </div>
+
+  <div *ngIf="tipoFormulario == 'delete'"
+       [ngStyle]="{'margin-top': '20px'}">
+    <dx-button
+      [text]="'Cancelar'"
+      (onClick)="apagaProduto()">
+
+    </dx-button>
+  </div>
+
+</div>
+
 

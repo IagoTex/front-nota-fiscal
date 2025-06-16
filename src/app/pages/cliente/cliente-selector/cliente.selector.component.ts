@@ -24,12 +24,12 @@ export class ClienteSelectorComponent implements OnInit{
   onValueChange(event: string){
     this.clientePesquisado = event;
     console.log(this.clientePesquisado)
-    this.searchValidation();
     if(this.clientePesquisado.length % 2 == 0){
       this.service.findByNome(this.clientePesquisado).subscribe(clientes => {
         this.dataSource = clientes;
       })
     }
+    this.searchValidation();
 
   }
 

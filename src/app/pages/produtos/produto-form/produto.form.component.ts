@@ -7,7 +7,8 @@ type TipoFormulario = 'create' | 'update' | 'delete';
 
 @Component({
   selector: 'produto-form',
-  templateUrl: './produto.form.component.html'
+  templateUrl: './produto.form.component.html',
+  styleUrls: ['./produto.form.component.scss']
 })
 export class ProdutoFormComponent implements OnInit{
 
@@ -73,6 +74,13 @@ export class ProdutoFormComponent implements OnInit{
         }
       )
     }
+  }
+
+  apagaProduto(){
+    this.produto.preco = null;
+    this.produto.codProduto = null;
+    this.produto.descricao = null;
+    this.produto.id = null;
   }
 
 }
