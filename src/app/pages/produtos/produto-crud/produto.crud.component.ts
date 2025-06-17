@@ -9,24 +9,22 @@ import {ProdutoService} from "../../../shared/services/produto.service";
   templateUrl: './produto.crud.component.html',
   styleUrls: ['./produto.crud.component.scss']
 })
-export class ProdutoCrudComponent implements OnInit{
-
-  dataSource:Produto[];
+export class ProdutoCrudComponent implements OnInit {
 
   model: Produto;
+  dataSource: Produto[];
 
-  constructor(private service: ProdutoService) {
-  }
+  constructor(private service: ProdutoService) { }
 
   ngOnInit() {
- this.populaDataSource();
+    this.populaDataSource();
   }
 
-  mostrarLog(log: any){
+  mostrarLog(log: any) {
     console.log(log)
   }
 
-  populaDataSource(){
+  populaDataSource() {
     this.service.findAll().subscribe(produtos => {
       this.dataSource = produtos;
     }, error => {

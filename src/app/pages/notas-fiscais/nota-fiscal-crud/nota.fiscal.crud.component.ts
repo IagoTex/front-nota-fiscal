@@ -8,13 +8,13 @@ import {Itens} from "../../../entitys/itens";
 })
 export class NotaFiscalCrudComponent{
 
-  dataSource: Nota[];
-
-  itens: Itens[];
-
   model: Nota;
 
   mostrarPopUp: boolean = false;
+
+  dataSource: Nota[];
+
+  itens: Itens[];
 
 
 

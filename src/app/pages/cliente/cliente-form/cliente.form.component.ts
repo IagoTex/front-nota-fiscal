@@ -10,7 +10,16 @@ type TipoFormulario = 'create' | 'update' | 'delete';
   templateUrl: "./cliente.form.component.html",
   styleUrls: ['./cliente.form.component.scss']
 })
-export class ClienteFormComponent implements OnInit{
+export class ClienteFormComponent implements OnInit {
+
+  mostrarPesquisa: boolean = false;
+
+  @Input() cliente: Cliente;
+  @Input() titulo: string;
+  @Input() textoBotao: string;
+  @Input() tipoFormulario: TipoFormulario = 'create';
+
+  @Output() submit = new EventEmitter<any>();
 
   @ViewChild('formulario') formCliente: DxFormComponent;
 
@@ -18,26 +27,51 @@ export class ClienteFormComponent implements OnInit{
 
   @ViewChild('nomeTbx') nomeTbx: DxTextBoxComponent;
 
-  @Input() cliente: Cliente;
-  @Input() titulo: string;
-  @Input() textoBotao:string;
-  @Input() tipoFormulario: TipoFormulario = 'create';
-
-  mostrarPesquisa: boolean = false;
-
-  @Output() submit = new EventEmitter<any>();
-
-  constructor(private clienteService:ClienteService) { }
+  constructor(private clienteService: ClienteService) { }
 
   ngOnInit() {
     this.cliente = new Cliente();
-    this.mostrarPesquisa = this.tipoFormulario != "create" ? true: false;
+    this.mostrarPesquisa = this.tipoFormulario != "create" ? true : false;
   }
 
-  onSubmit(){
+  selecionaCliente(cliente: Cliente) {
+    if (cliente) {
+      this.cliente = cliente;
+    } else {
+      this.apagaCliente();
+    }
+  }
 
-    if(this.cliente.nomeCliente!= null && this.cliente.codCliente !=null){
-      switch (this.tipoFormulario){
+  save() {
+    this.clienteService.save(this.cliente).subscribe(
+      response => {
+        this.submit.emit(response);
+        alert('Cliente salvo com sucesso!')
+      }, error => {
+        this.submit.emit(error);
+        alert('Erro ao salvar Cliente com sucesso!')
+      }
+    )
+  }
+
+  delete() {
+    if (this.cliente.id != null) {
+      this.clienteService.delete(this.cliente.id).subscribe(
+        response => {
+          this.submit.emit(response);
+          alert('Cliente deletado com sucesso!')
+        }, error => {
+          this.submit.emit(error);
+          alert('Erro ao deletar cliente!')
+        }
+      )
+    }
+  }
+
+  onSubmit() {
+
+    if (this.cliente.nomeCliente != null && this.cliente.codCliente != null) {
+      switch (this.tipoFormulario) {
 
         case "create":
           this.save();
@@ -60,37 +94,7 @@ export class ClienteFormComponent implements OnInit{
 
   }
 
-  save(){
-    this.clienteService.save(this.cliente).subscribe(
-      response => {
-        this.submit.emit(response);
-        alert('Cliente salvo com sucesso!')
-      }, error => {
-        this.submit.emit(error);
-        alert('Erro ao salvar Cliente com sucesso!')
-      }
-    )
-  }
-
-  delete(){
-    if(this.cliente.id != null){
-      this.clienteService.delete(this.cliente.id).subscribe(
-        response => {
-          this.submit.emit(response);
-          alert('Cliente deletado com sucesso!')
-        }, error => {
-          this.submit.emit(error);
-          alert('Erro ao deletar cliente!')
-        }
-      )
-    }
-  }
-
-  selecionaCliente(cliente:Cliente){
-    this.cliente = cliente;
-  }
-
-  apagaCliente(){
+  apagaCliente() {
     this.cliente.id = null;
     this.formCliente.instance.resetValues();
     this.formCliente.instance.reset();

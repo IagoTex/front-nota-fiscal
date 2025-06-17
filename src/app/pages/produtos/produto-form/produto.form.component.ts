@@ -30,6 +30,10 @@ export class ProdutoFormComponent implements OnInit{
     this.mostrarPesquisa = this.tipoFormulario != "create" ? true: false;
   }
 
+  selecionaProduto(produto:Produto){
+    this.produto = produto;
+  }
+
   onSubmit(){
 
     if(this.produto.codProduto!= null && this.produto.descricao !=null && this.produto.preco !=null){
@@ -79,10 +83,6 @@ export class ProdutoFormComponent implements OnInit{
         }
       )
     }
-  }
-
-  selecionaProduto(produto:Produto){
-    this.produto = produto;
   }
 
   apagaProduto(){

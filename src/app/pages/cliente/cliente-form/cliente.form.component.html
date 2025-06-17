@@ -18,7 +18,7 @@
 
 
     <div *dxTemplate="let data of 'selectorTemplate'">
-      <cliente-selector (valueChange)="selecionaCliente($event)"></cliente-selector>
+      <cliente-selector [clienteSelecionado]="cliente" (valueChange)="selecionaCliente($event)"></cliente-selector>
     </div>
 
 

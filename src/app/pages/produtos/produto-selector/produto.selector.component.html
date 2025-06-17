@@ -1,18 +1,20 @@
 <dx-text-box
   width="500"
-  [showClearButton]
+  [showClearButton]="true"
   [placeholder]="'Pesquise aqui...'"
   [value]="produtoPesquisado"
+  (onFocusIn)="focus == true"
+  (onFocusOut)="focus == false"
   (valueChange)="onValueChange($event)">
 </dx-text-box>
 
 <dx-select-box
   #resultados
   width="500"
-  displayExpr="descricao"
+  [displayExpr]="formataProduto"
   [visible]="pesquisando"
   [dataSource]="dataSource"
-  [opened]="true"
+  [opened]="pesquisando && dataSource?.length > 0"
   [selectedItem]="produtoSelecionado"
   (valueChange)="nomeVlaueChange($event)">
 

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
 import {Cliente} from "../../../entitys/cliente";
 import {ClienteService} from "../../../shared/services/cliente.service";
-import {DxSelectBoxComponent} from "devextreme-angular";
+import {DxSelectBoxComponent, DxTextBoxComponent} from "devextreme-angular";
 
 @Component({
   selector: "cliente-selector",
@@ -13,10 +13,13 @@ export class ClienteSelectorComponent implements OnInit{
   clientePesquisado: string;
   pesquisando: boolean = false;
 
+  onFocus: boolean;
+
   @Input() clienteSelecionado: Cliente;
   @Output() valueChange = new EventEmitter<Cliente>();
 
   @ViewChild('resultados') resultados: DxSelectBoxComponent;
+  @ViewChild('textBox') textBox: DxTextBoxComponent;
 
   constructor(private service:ClienteService) { }
 
@@ -26,7 +29,10 @@ export class ClienteSelectorComponent implements OnInit{
 
   onValueChange(event: string){
     this.clientePesquisado = event;
-    if(this.clientePesquisado.length % 2 == 0){
+    if(this.clientePesquisado == '' || this.clientePesquisado == null){
+      this.clienteSelecionado = null;
+    }
+    if(this.clientePesquisado.length % 2 == 0 && this.clientePesquisado){
       this.service.findByNome(this.clientePesquisado).subscribe(clientes => {
         this.dataSource = clientes;
         this.pesquisando = true;
@@ -43,7 +49,7 @@ export class ClienteSelectorComponent implements OnInit{
   }
 
   searchValidation(){
-    if(this.clientePesquisado.length > 1){
+    if(this.onFocus == true){
       this.pesquisando = true;
     }
     else{
@@ -54,8 +60,11 @@ export class ClienteSelectorComponent implements OnInit{
 
   nomeVlaueChange(cliente: Cliente) {
     this.clienteSelecionado = cliente;
-    console.log(cliente);
+    if(this.clienteSelecionado.id != null){
+      this.pesquisando = false;
+    }
     this.clientePesquisado = `[${cliente.codCliente}] - ${cliente.nomeCliente}`;
+    console.log(this.clienteSelecionado)
     this.valueChange.emit(this.clienteSelecionado);
 
   }

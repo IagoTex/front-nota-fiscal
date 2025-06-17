@@ -1,8 +1,11 @@
 <dx-text-box
+  #textBox
   width="500"
-  [showClearButton]
+  [showClearButton]="true"
   [placeholder]="'Pesquise aqui...'"
   [value]="clientePesquisado"
+  (onFocusIn)="onFocus == true"
+  (onFocusOut)="onFocus == false"
   (valueChange)="onValueChange($event)">
 </dx-text-box>
 

@@ -4,7 +4,10 @@ import {Produto} from "../../../entitys/produto";
 import {Itens} from "../../../entitys/itens";
 import {NotaService} from "../../../shared/services/nota.service";
 import {ProdutoService} from "../../../shared/services/produto.service";
-import {DxTreeListComponent} from "devextreme-angular";
+import {DxFormComponent, DxTreeListComponent} from "devextreme-angular";
+
+type TipoFormulario = 'create' | 'update' | 'delete';
+
 @Component({
   selector: 'nota-fiscal-form',
   templateUrl: './nota.fiscal.form.component.html',
@@ -14,25 +17,28 @@ export class NotaFiscalFormComponent implements OnInit{
 
   private temIdCounter = -1;
 
-  produtos:Produto[];
-
-  itens:Itens[];
-
   iten:Itens;
+
+  produtos:Produto[];
 
   @Input() nota:Nota;
 
   @Input() titulo:string;
 
+  @Input() textoBotao;
+
+  @Input() tipoFormulario: TipoFormulario = 'create';
+
   @ViewChild('treeList') treeList: DxTreeListComponent;
 
-  constructor(private service:NotaService, private produtoServie:ProdutoService) {
-  }
+  @ViewChild('form') form: DxFormComponent;
+
+  constructor(private service:NotaService, private produtoServie:ProdutoService) { }
 
   ngOnInit() {
     this.nota = new Nota();
-    this.nota.itens = [];
     this.iten = new Itens();
+    this.nota.itens = [];
 
     this.buscaProdutos();
   }
@@ -40,9 +46,8 @@ export class NotaFiscalFormComponent implements OnInit{
   buscaProdutos(){
     this.produtoServie.findAll().subscribe(produtos =>{
       this.produtos = produtos;
-    })
+    });
   }
-
 
   onInitNewRow(item: Itens){
     item.idItem = this.temIdCounter--;
@@ -51,32 +56,28 @@ export class NotaFiscalFormComponent implements OnInit{
 
   }
 
-  adicionaItens(itemNovo: any){
+  adicionarItens(itemNovo: any){
 
     itemNovo.data.produto = this.iten.produto;
     itemNovo.data.quantidade = this.iten.quantidade;
     itemNovo.data.idItem = this.iten.idItem;
   }
 
-  preparaItemEdicao(e: any){
+  prepararItemEdicao(e: any){
     const itemSelecionado = e.data;
 
     this.iten.idItem = itemSelecionado.idItem;
     this.iten.produto = itemSelecionado.produto;
     this.iten.quantidade = itemSelecionado.quantidade;
-
   }
 
-  editaItens(e: any){
+  editarItens(e: any){
     const item = this.nota.itens.find(itemOnDt => itemOnDt.idItem === e.key);
 
     if (item){
       item.produto = this.iten.produto;
       item.quantidade = this.iten.quantidade;
-      console.log("Item editado")
     }
-    console.log("Não entrou nem no if")
-
   }
 
   deletarItens(iten: any){
@@ -84,10 +85,32 @@ export class NotaFiscalFormComponent implements OnInit{
       this.nota.itens.splice(this.nota.itens.indexOf(iten), 1);
     }
   }
-  mostratDataSource(){
-    console.log(this.nota.itens)
-    this.treeList.instance.getDataSource().reload()
 
+  onSubmit(){
+
+    switch (this.tipoFormulario){
+
+      case "create":
+        this.service.save(this.nota);
+        break;
+
+      case "update":
+        this.service.save(this.nota);
+        break;
+
+      case "delete":
+        this.service.delete(this.nota.id);
+        break;
+
+    }
+
+  }
+
+  apagaNota(){
+    this.nota.id = null;
+    this.nota.itens = []
+    this.form.instance.resetValues();
+    this.form.instance.reset();
   }
 
 

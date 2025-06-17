@@ -3,6 +3,7 @@
 <br>
 <div>
   <dx-form
+    #form
     align="right"
     labelLocation="left"
     [alignItemLabels]="true"
@@ -33,9 +34,9 @@
         [showBorders]="true"
         [keyExpr]="'idItem'"
         (onInitNewRow)="onInitNewRow(iten)"
-        (onRowInserting)="adicionaItens($event)"
-        (onEditingStart)="preparaItemEdicao($event)"
-        (onRowUpdating)="editaItens($event)"
+        (onRowInserting)="adicionarItens($event)"
+        (onEditingStart)="prepararItemEdicao($event)"
+        (onRowUpdating)="editarItens($event)"
         (onRowRemoving)="deletarItens($event)">
 
         <dxo-editing
@@ -106,4 +107,22 @@
 
   </dx-form>
 </div>
-<dx-button text="aperte" (onClick)="mostratDataSource()"></dx-button>
+<div class="container-btns">
+  <div [ngStyle]="{'margin-top': '20px', 'margin-left': '139px'}">
+    <dx-button
+      validationGroup="formulario"
+      [text]="textoBotao">
+
+    </dx-button>
+  </div>
+
+  <div *ngIf="tipoFormulario == 'delete' || tipoFormulario == 'update'"
+       [ngStyle]="{'margin-top': '20px'}">
+    <dx-button
+      [text]="'Cancelar'"
+      (onClick)="apagaNota()">
+
+    </dx-button>
+  </div>
+
+</div>
