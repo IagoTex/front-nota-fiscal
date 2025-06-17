@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
 import {Cliente} from "../../../entitys/cliente";
 import {ClienteService} from "../../../shared/services/cliente.service";
+import {DxSelectBoxComponent} from "devextreme-angular";
 
 @Component({
   selector: "cliente-selector",
@@ -15,6 +16,8 @@ export class ClienteSelectorComponent implements OnInit{
   @Input() clienteSelecionado: Cliente;
   @Output() valueChange = new EventEmitter<Cliente>();
 
+  @ViewChild('resultados') resultados: DxSelectBoxComponent;
+
   constructor(private service:ClienteService) { }
 
   ngOnInit() {
@@ -23,10 +26,16 @@ export class ClienteSelectorComponent implements OnInit{
 
   onValueChange(event: string){
     this.clientePesquisado = event;
-    console.log(this.clientePesquisado)
     if(this.clientePesquisado.length % 2 == 0){
       this.service.findByNome(this.clientePesquisado).subscribe(clientes => {
         this.dataSource = clientes;
+        this.pesquisando = true;
+
+        setTimeout(() =>{
+          if(this.resultados?.instance){
+            this.resultados.instance.open()
+          }
+        })
       })
     }
     this.searchValidation();
@@ -46,9 +55,13 @@ export class ClienteSelectorComponent implements OnInit{
   nomeVlaueChange(cliente: Cliente) {
     this.clienteSelecionado = cliente;
     console.log(cliente);
-    this.clientePesquisado = '';
+    this.clientePesquisado = `[${cliente.codCliente}] - ${cliente.nomeCliente}`;
     this.valueChange.emit(this.clienteSelecionado);
 
+  }
+
+  formataCliente(clienteFormatado: any){
+    return clienteFormatado ? `[${clienteFormatado.codCliente}] - ${clienteFormatado.nomeCliente}` : '';
   }
 }
 

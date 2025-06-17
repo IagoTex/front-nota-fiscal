@@ -12,16 +12,16 @@ type TipoFormulario = 'create' | 'update' | 'delete';
 })
 export class ProdutoFormComponent implements OnInit{
 
-  @ViewChild('formulario') formCliente: DxFormComponent;
+  @ViewChild('formulario') formProduto: DxFormComponent;
 
   @Input() produto: Produto;
   @Input() titulo: string;
   @Input() textoBotao:string;
   @Input() tipoFormulario: TipoFormulario = 'create';
 
-  mostrarPesquisa: boolean = false;
-
   @Output() submit = new EventEmitter<any>();
+
+  mostrarPesquisa: boolean = false;
 
   constructor(private service:ProdutoService) { }
 
@@ -48,6 +48,7 @@ export class ProdutoFormComponent implements OnInit{
           break
 
       }
+      this.apagaProduto();
     } else {
       alert('Por favor, preencha todos os campos obrigatórios.')
     }
@@ -58,29 +59,36 @@ export class ProdutoFormComponent implements OnInit{
     this.service.save(this.produto).subscribe(
       response => {
         this.submit.emit(response);
+        alert('Produto salvo com sucesso!')
       }, error => {
         this.submit.emit(error);
+        alert('Erro ao salvar produto!')
       }
     )
   }
 
   delete(){
     if(this.produto.id != null){
-      this.service.save(this.produto).subscribe(
+      this.service.delete(this.produto.id).subscribe(
         response => {
           this.submit.emit(response);
+          alert('Produto deletado com sucesso!')
         }, error => {
           this.submit.emit(error);
+          alert('Erro ao deletar cliente')
         }
       )
     }
   }
 
+  selecionaProduto(produto:Produto){
+    this.produto = produto;
+  }
+
   apagaProduto(){
-    this.produto.preco = null;
-    this.produto.codProduto = null;
-    this.produto.descricao = null;
     this.produto.id = null;
+    this.formProduto.instance.resetValues()
+    this.formProduto.instance.reset()
   }
 
 }

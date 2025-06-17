@@ -1,6 +1,7 @@
 <base-crud [titulo]="'Produtos'">
 
   <div listagem>
+    <dx-button [text]="'Atualizar Lista'" (onClick)="populaDataSource()" [ngStyle]="{'margin-bottom': '20px', 'width': '100%'}"></dx-button>
     <dx-data-grid
       [dataSource]="dataSource"
       [cacheEnabled]="false">

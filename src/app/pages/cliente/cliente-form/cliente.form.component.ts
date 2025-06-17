@@ -64,19 +64,23 @@ export class ClienteFormComponent implements OnInit{
     this.clienteService.save(this.cliente).subscribe(
       response => {
         this.submit.emit(response);
+        alert('Cliente salvo com sucesso!')
       }, error => {
         this.submit.emit(error);
+        alert('Erro ao salvar Cliente com sucesso!')
       }
     )
   }
 
   delete(){
     if(this.cliente.id != null){
-      this.clienteService.save(this.cliente).subscribe(
+      this.clienteService.delete(this.cliente.id).subscribe(
         response => {
           this.submit.emit(response);
+          alert('Cliente deletado com sucesso!')
         }, error => {
           this.submit.emit(error);
+          alert('Erro ao deletar cliente!')
         }
       )
     }
@@ -91,4 +95,5 @@ export class ClienteFormComponent implements OnInit{
     this.formCliente.instance.resetValues();
     this.formCliente.instance.reset();
   }
+
 }

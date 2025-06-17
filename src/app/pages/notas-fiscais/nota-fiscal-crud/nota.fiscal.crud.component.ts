@@ -12,6 +12,8 @@ export class NotaFiscalCrudComponent{
 
   itens: Itens[];
 
+  model: Nota;
+
   mostrarPopUp: boolean = false;
 
 

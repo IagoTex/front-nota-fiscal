@@ -17,14 +17,18 @@ export class ClienteCrudComponent implements OnInit{
   }
 
   ngOnInit() {
+  this.populaDataSource();
+  }
+
+  mostrarLog(log: any){
+    console.log(log)
+  }
+
+  populaDataSource(){
     this.service.findAll().subscribe(clientes => {
       this.dataSource = clientes;
     }, error => {
       console.log("Erro ao trazer a lista de clientes", error);
     })
-  }
-
-  mostrarLog(log: any){
-    console.log(log)
   }
 }

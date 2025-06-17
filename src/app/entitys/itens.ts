@@ -4,6 +4,8 @@ import {Nota} from "./nota";
 
 export class Itens extends AbstractEntity{
 
+  idItem: number;
+
   produto:Produto;
 
   quantidade: number;

@@ -1,0 +1,109 @@
+<h2>{{titulo}}</h2>
+<br>
+<br>
+<div>
+  <dx-form
+    align="right"
+    labelLocation="left"
+    [alignItemLabels]="true"
+    [validationGroup]="'notaFormGroup'"
+    [(formData)]="nota">
+
+    <dxi-item [label]="{text: 'Data'}" dataField="data" [template]="'dataTemplate'"></dxi-item>
+    <dxi-item [label]="{text: 'Cliente'}" dataField="cliente" [template]="'clienteTemplate'"></dxi-item>
+    <dxi-item [label]="{visible: false}" dataField="itens" [template]="'itensTemplate'"></dxi-item>
+
+    <div *dxTemplate="let data of 'dataTemplate'">
+      <dx-date-box
+        width="500"
+        [(value)]="nota.data"
+        [showClearButton]="true">
+      </dx-date-box>
+    </div>
+
+    <div *dxTemplate="let data of 'clienteTemplate'">
+      <cliente-selector [clienteSelecionado]="nota.cliente" (valueChange)="this.nota.cliente = $event"></cliente-selector>
+    </div>
+
+    <div *dxTemplate="let data of 'itensTemplate'">
+      <dx-tree-list
+        #treeList
+        [dataSource]="nota.itens"
+        [cacheEnabled]="false"
+        [showBorders]="true"
+        [keyExpr]="'idItem'"
+        (onInitNewRow)="onInitNewRow(iten)"
+        (onRowInserting)="adicionaItens($event)"
+        (onEditingStart)="preparaItemEdicao($event)"
+        (onRowUpdating)="editaItens($event)"
+        (onRowRemoving)="deletarItens($event)">
+
+        <dxo-editing
+          mode="popup"
+          [allowUpdating]="true"
+          [allowAdding]="true"
+          [allowDeleting]="true"
+          [useIcons]="true">
+
+          <dxo-popup
+            [showTitle]="true"
+            title="Itens"
+            [width]="700"
+            [height]="500">
+
+          </dxo-popup>
+
+        </dxo-editing>
+
+        <dxi-column
+          dataField="produto"
+          caption="Produto"
+          alignment="center"
+          editCellTemplate="produtoEditTemplate"
+          cellTemplate="produtoTemplate">
+        </dxi-column>
+
+        <dxi-column
+          dataField="quantidade"
+          caption="Quantidade"
+          alignment="center"
+          editCellTemplate="quantidadeEditTemplate"
+          cellTemplate="quantidadeTemplate">
+        </dxi-column>
+
+
+        <dxi-column
+          type="buttons"
+          alignment="center"
+          caption="Opções">
+          <dxi-button name="edit"></dxi-button>
+          <dxi-button name="delete"></dxi-button>
+
+        </dxi-column>
+
+        <div *dxTemplate="let data of 'produtoTemplate'">
+          {{ data.value?.descricao}}
+        </div>
+
+        <div *dxTemplate="let data of 'quantidadeTemplate'">
+          {{ data.value }}
+        </div>
+
+
+        <div *dxTemplate="let data of 'produtoEditTemplate'">
+          <dx-select-box [showClearButton]="true" [searchEnabled]="true" [dataSource]="produtos" [(selectedItem)]="iten.produto" displayExpr="descricao"></dx-select-box>
+
+        </div>
+
+        <div *dxTemplate="let data of 'quantidadeEditTemplate'">
+          <dx-number-box [showClearButton]="true" [(value)]="iten.quantidade"></dx-number-box>
+
+        </div>
+
+      </dx-tree-list>
+
+    </div>
+
+  </dx-form>
+</div>
+<dx-button text="aperte" (onClick)="mostratDataSource()"></dx-button>

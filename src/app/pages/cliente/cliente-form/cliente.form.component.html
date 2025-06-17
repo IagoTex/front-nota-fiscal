@@ -68,7 +68,7 @@
     </dx-button>
   </div>
 
-  <div *ngIf="tipoFormulario == 'delete'"
+  <div *ngIf="tipoFormulario == 'delete' || tipoFormulario == 'update'"
        [ngStyle]="{'margin-top': '20px'}">
     <dx-button
       [text]="'Cancelar'"
@@ -79,3 +79,4 @@
 
 </div>
 </div>
+
